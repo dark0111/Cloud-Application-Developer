@@ -1,13 +1,14 @@
 require('dotenv').config();
 
 const express = require('express');
+let env = JSON.parse(process.env.VCAP_SERVICES);
 const app = express();
 const port = process.env.PORT || 5001;
 const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 const toneAnalyzer = new ToneAnalyzerV3({
   version: '2017-09-21',
-  iam_apikey: process.env.IAM_API_KEY,
-  url: process.env.IAM_API_URL
+  iam_apikey: env["tone_analyzer"][0]["credentials"]["apikey"] ,
+  url: 'https://gateway-lon.watsonplatform.net/tone-analyzer/api'
 });
 const cors = require('cors');
 
